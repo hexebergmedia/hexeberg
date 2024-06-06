@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+    </style>
+    <title>Hexeberg</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+    <body>
+        <header class="header">
+            <div class="column">
+                <a href="./index.html">
+                    <img src="hexeberg_logo.png" alt="Logo" class="logo">
+                </a>
+            </div>
+            <div class="column"><a href="./index.html"><span class="header-text"></span></a></div>
+            <div class="column"><a href="./index.html"><span class="header-text">Hjem</span></a></div>
+            <div class="column"><a href="./prosjekter.html"><span class="header-text">Prosjekter</span></a></div>
+            <div class="column"><a href="#about-me-section"><span class="header-text" onclick="scrollToSection('about-me-section')">Om Meg</span></a></div>
+        </header>
+
+        <main class="landing-page">
+            <section class="flex-container-top">
+                <!--<div class="column" style="background-image: url('image1.jpg');">Column 1<button class="column-button">Button 1</button></div>-->
+                <div class="column">
+                    <a href="gruup.html" class="column-link" style="background-image: url('./thumbnails/gruup_front_1.png'); min-height: 250px;"><button class="column-button">Gruup</button></a>
+                </div>
+                <div class="column">
+                    <a href="kubrix.html" class="column-link" style="background-image: url('./thumbnails/kubrix_front_2.png'); min-height: 250px;"><button class="column-button">Kubrix</button></a>
+                </div>
+                <div class="column">
+                    <a href="gabz.html" class="column-link" style="background-image: url('./thumbnails/gabz_front_3.png'); min-height: 250px;"><button class="column-button">Gabz</button></a>
+                </div>
+                <div class="column">
+                    <a href="gtareborn.html" class="column-link" style="background-image: url('./thumbnails/gtareborn_front_4.png'); min-height: 250px;"><button class="column-button">GTA Reborn</button></a>
+                </div>
+            </section>
+            <section class="flex-container">
+                <div class="column"><img src="./bedrifter/logo1_reborn.png" alt="Logo-1" class="logo-1"></div>
+                <div class="column"><img src="./bedrifter/logo2_rbup.png" alt="Logo-2" class="logo-2"></div>
+                <div class="column"><img src="./bedrifter/logo3_computerworld.png" alt="Logo-3" class="logo-3"></div>
+                <div class="column"><img src="./bedrifter/logo4_proteket.png" alt="Logo-4" class="logo-4"></div>
+                <div class="column"><img src="./bedrifter/logo5_labrida.png" alt="Logo-5" class="logo-5"></div>
+                <div class="column"><img src="./bedrifter/logo6_gruup.png" alt="Logo-6" class="logo-6"></div>
+                <div class="column"><img src="./bedrifter/logo7_gabz.png" alt="Logo-7" class="logo-7"></div>
+            </section>
+            <section class="flex-container-prosjekter">
+                <div class="column">
+                    <a href="prosjekter.html" class="column-link" style="background-image: url('./thumbnails/new_front.png');"><button class="column-button">Flere Prosjekter</button></a>
+                </div>
+            </section>
+            <section class="flex-container-meg" id="about-me-section">
+                <div class="column"></div>
+                <div class="column" class="column-link" style="background-image: url('ai_prosjekt.png');"></div>
+                <div class="column"><p><em>Ole K. Hexeberg</em><br><br>Jeg er en digital utvikler på 27 år med en bred interesse for teknologi og har over 10 års erfaring innen media bransjen på ulike områder.<br><br>Jeg har tatt studier innen grafisk design og film & tv på Høyskolen Kristiania. Etter studiene har jeg jobbet med ulike prosjekter innen interiørdesign for spill, merkevarebygging for bedrifter, videoproduksjon og generell markedsføring av disse prosjektene.<br><Br>I tillegg brenner jeg for å spre et positivt budskap om psykisk helse blant unge.<br><br>La oss ta en prat!<br><br><em>olehexeberg@gmail.com<br>48 11 79 15</em></p></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-waves">
+                <div>
+                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(26,26,28,0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(26,26,28,0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(26,26,28,0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(26,26,28,1.0)" />
+                    </g>
+                    </svg>
+                </div>
+                <!--Waves end-->
+            </section>
+            <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+        </main>
+
+        <footer class="footer">
+            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+        </footer>
+
+        <script>
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            let mybutton = document.getElementById("myBtn");
+
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+              } else {
+                mybutton.style.display = "none";
+              }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </body>
+</html>

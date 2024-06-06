@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+    --background: #131314;
+    --background-header: #1a1a1c;
+    --background-header-column: #1a1a1c;
+    --background-column: #131314;
+    --font-color: #fa6d4c;
+    --second-color: #fff;
+    --button-color: #1a1a1c;
+    --button-font-color: #fa6d4c;
+    --button-color-hover: #131314;
+
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+    --font-black: 900;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Source Sans 3", sans-serif;
+    font-optical-sizing: auto;
+    background-color: var(--background);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 1000; /* Ensure it's above other content */
+    width: 100%;
+    box-shadow: 0px 6px 11px 3px rgba(0,0,0,0.64);
+    -webkit-box-shadow: 0px 6px 11px 3px rgba(0,0,0,0.64);
+    -moz-box-shadow: 0px 6px 11px 3px rgba(0,0,0,0.64);
+}
+
+.header, .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: var(--background-header);
+    padding: 0px 0;
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0px 0;
+}
+
+.flex-container-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px 0;
+    height: 500px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px 0;
+    height: 150px;
+}
+
+.flex-container-prosjekter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px 0;
+    height: 450px;
+}
+
+.flex-container-meg {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px 0;
+    height: 550px;
+}
+
+.flex-container-meg .column p {
+    margin-left: 20px;
+    margin-top: 50px;
+    color: var(--second-color);
+    font-size: 1.0em;
+    font-weight: var(--font-normal);
+    text-align: left;
+}
+
+.header .column, .footer .column, .landing-page .column {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--background-column);
+    margin: 5px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0px;
+}
+
+
+/* Specific styles for header */
+.header .column {
+    background-color: var(--background-header-column);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--font-color);
+    font-size: 1.0em;
+    font-weight: var(--font-medium);
+}
+
+
+/* Header text hover effect */
+.header .column .header-text {
+    transition: transform 0.3s, color 0.3s;
+}
+
+.header .column .header-text:hover {
+    color: var(--second-color);
+    cursor: pointer;
+}
+
+/* Add spacing between the two flex containers in the landing page */
+.landing-page .flex-container + .flex-container {
+    margin-top: 20px;
+}
+
+.landing-page .column {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+
+/* Logo styles */
+.logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    align-self: center;
+}
+
+.logo-1, .logo-2, .logo-3, .logo-4, .logo-5, .logo-6, .logo-7 {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    align-self: center;
+}
+
+a {
+    color: var(--font-color);
+    text-decoration: none;
+}
+
+/* Column link styles */
+.column-link {
+    position: relative; /* Make position relative for absolute positioning of the button */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Align items to the bottom */
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    padding: 10px;
+    border-radius: 4px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+/* Position Button 1 at the bottom */
+.column-link .column-button {
+    position: absolute;
+    bottom: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Hover effect for the image */
+.column-link:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+
+/* Specific styles for footer */
+.footer .column {
+    background-color: var(--background-header-column);
+    height: 80px;
+}
+
+.footer .column p {
+    color: var(--second-color);
+    font-size: 0.9em;
+    font-weight: var(--font-normal);
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+
+/* Button styles */
+.column-button {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    color: var(--button-font-color);
+    font-weight: var(--font-medium);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.column-button:hover {
+    background-color: var(--button-color-hover);
+    color: var(--second-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.flex-container-waves {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0px 0;
+    height: 150px;
+    position: relative; /* Added to ensure it takes up the full width */
+    overflow: hidden; /* Ensure no overflow */
+}
+
+.waves {
+    position: absolute; /* Positioned absolutely to ensure it covers the full width */
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height:15vh;
+    margin-bottom:-7px; /*Fix for safari gap*/
+    min-height:100px;
+    max-height:150px;
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+    .waves {
+    height:40px;
+    min-height:40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .flex-container-top {
+        flex-direction: column;
+        height: 1200px;
+    }
+}
