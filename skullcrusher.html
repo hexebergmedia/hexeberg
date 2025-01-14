@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+    </style>
+    <title>Skull Crusher</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <link rel="stylesheet" href="styles_skullcrusher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+    <body>
+        <header class="header">
+            <div class="column">
+                <a href="./index.html">
+                    <img src="hexeberg_logo.png" alt="Logo" class="logo">
+                </a>
+            </div>
+            <div class="column"><a href="./skullcrusher.html"><span class="header-text"></span></a></div>
+            <div class="column"><a href="./index.html"><span class="header-text">Hjem</span></a></div>
+            <div class="column"><a href="./prosjekter.html"><span class="header-text">Prosjekter</span></a></div>
+            <div class="column"><a href="./index.html#about-me-section"><span class="header-text">Om Meg</span></a></div>
+        </header>
+
+        <main class="landing-page">
+            <section class="flex-container-prosjekter">
+                <div class="column" href="skullcrusher.html" class="column-link" style="background-image: url('./headers/skullcrusher_header.png');"><p>Et spill laget på 7 dager</p></div>
+            </section>
+            <section class="flex-container-title">
+                <div class="column"></div>
+                <div class="column"><p><em>Skull Crusher</em><br>"Første person" skytespill</p></div>
+                <div class="column"><p><a href="https://noobysoft.itch.io/skull-crusher" target="_blank"><br>https://noobysoft.itch.io/skull-crusher</p></a></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-overview">
+                <div class="column"></div>
+                <div class="column"><p><em>Mine roller</em><br>Animasjon<br>UI/UX<br>3D Modellering<br>Konseptutvikling<br>Systemutvikling innen UE Blueprints<br>Lyd design<br><br><br><em>Tidslinje & Status</em><br>7 dager. <em>Start 17 Oktober 2024</em></p></div>
+                <div class="column"><p><em>Innhold</em><br>Synty Studios hostet en game jam kalt “Synty Spooky Game Jam” med temaet “It never ends..” rundt halloween tiden. En game jam er kort fortalt en konkurranse om å lage et spill innen en gitt tidsramme, i dette tilfellet var det 7 dager for min del.<br><br>Jeg endte opp med å lande på ideen om å lage et “første person” skytespill som handler om å overleve mengder med skjeletter som løper etter deg i et evigvarende fangehull. Nedenfor kan man få et innblikk i prosessen, eller så kan man se en video om det <a href="https://www.youtube.com/shorts/lJj2ekByCsM" target="_blank">her.</p></a></p></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/mainmenu_1.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/ui_mainmenu.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_1.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_3.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_4.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_5.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/sublevel_overall.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/sublevel_load.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/player_data.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/enemy_spawn.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/enemy_behaviour.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/door_bp.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/trap_bp.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-content">
+                <div class="column"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/ui_player.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/ui_death.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column"></div>
+            </section>
+            <section class="flex-container-waves">
+                <div>
+                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(26,26,28,0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(26,26,28,0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(26,26,28,0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(26,26,28,1.0)" />
+                    </g>
+                    </svg>
+                </div>
+                <!--Waves end-->
+            </section>
+            <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+        </main>
+
+        <footer class="footer">
+            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+        </footer>
+
+        <script>
+            function toggleImageSize(element) {
+                element.classList.toggle('enlarged');
+            }
+
+            function scrollToSection(sectionId) {
+                // Construct the URL of the index.html page
+                const indexPageUrl = window.location.origin + "/index.html";
+
+                // Construct the URL with the section ID appended as a hash
+                const targetUrl = indexPageUrl + '#' + sectionId;
+
+                // Navigate to the constructed URL
+                window.location.href = targetUrl;
+            }
+
+            let mybutton = document.getElementById("myBtn");
+
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+              } else {
+                mybutton.style.display = "none";
+              }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </body>
+</html>
