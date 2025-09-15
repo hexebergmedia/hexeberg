@@ -10,6 +10,112 @@
     <link rel="icon" type="image/x-icon" href="./favicon.png">
     <link rel="stylesheet" href="styles_skullcrusher.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Improved image viewer styles */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .enlarged-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-button {
+            left: 20px;
+        }
+        
+        .next-button {
+            right: 20px;
+        }
+        
+        /* Add cursor pointer to clickable images */
+        .column-link[onclick] {
+            cursor: pointer;
+        }
+        
+        /* For mobile devices */
+        @media (max-width: 768px) {
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            
+            .prev-button {
+                left: 10px;
+            }
+            
+            .next-button {
+                right: 10px;
+            }
+        }
+    </style>
 </head>
     <body>
         <header class="header">
@@ -37,55 +143,55 @@
             <section class="flex-container-overview">
                 <div class="column"></div>
                 <div class="column"><p><em>Mine roller</em><br>Animasjon<br>UI/UX<br>3D Modellering<br>Konseptutvikling<br>Systemutvikling innen UE Blueprints<br>Lyd design<br><br><br><em>Tidslinje & Status</em><br>7 dager. <em>Start 17 Oktober 2024</em></p></div>
-                <div class="column"><p><em>Innhold</em><br>Synty Studios hostet en game jam kalt “Synty Spooky Game Jam” med temaet “It never ends..” rundt halloween tiden. En game jam er kort fortalt en konkurranse om å lage et spill innen en gitt tidsramme, i dette tilfellet var det 7 dager for min del.<br><br>Jeg endte opp med å lande på ideen om å lage et “første person” skytespill som handler om å overleve mengder med skjeletter som løper etter deg i et evigvarende fangehull. Nedenfor kan man få et innblikk i prosessen, eller så kan man se en video om det <a href="https://www.youtube.com/shorts/lJj2ekByCsM" target="_blank">her.</p></a></p></div>
+                <div class="column"><p><em>Innhold</em><br>Synty Studios hostet en game jam kalt "Synty Spooky Game Jam" med temaet "It never ends.." rundt halloween tiden. En game jam er kort fortalt en konkurranse om å lage et spill innen en gitt tidsramme, i dette tilfellet var det 7 dager for min del.<br><br>Jeg endte opp med å lande på ideen om å lage et "første person" skytespill som handler om å overleve mengder med skjeletter som løper etter deg i et evigvarende fangehull. Nedenfor kan man få et innblikk i prosessen, eller så kan man se en video om det <a href="https://www.youtube.com/shorts/lJj2ekByCsM" target="_blank">her.</p></a></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/mainmenu_1.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/ui_mainmenu.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/mainmenu_1.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/ui_mainmenu.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/level_design_1.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/level_design_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_1.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/level_design_3.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/level_design_4.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_3.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_4.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/level_design_5.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/sublevel_overall.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/level_design_5.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/sublevel_overall.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/sublevel_load.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/player_data.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/sublevel_load.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/player_data.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/enemy_spawn.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/enemy_behaviour.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/enemy_spawn.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/enemy_behaviour.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/door_bp.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/trap_bp.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/door_bp.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/trap_bp.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/ui_player.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('skullcrush/ui_death.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/ui_player.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('skullcrush/ui_death.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-waves">
@@ -109,12 +215,123 @@
         </main>
 
         <footer class="footer">
-            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+            <div class="column"><p>© 2025 Ole K. Hexeberg</p></div>
         </footer>
 
+        <!-- Image Viewer Overlay -->
+        <div class="image-overlay" id="imageOverlay">
+            <div class="close-button" onclick="hideImage()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="nav-button prev-button" onclick="showPrevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <img class="enlarged-image" id="enlargedImage" src="" alt="Enlarged Image">
+            <div class="nav-button next-button" onclick="showNextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
         <script>
-            function toggleImageSize(element) {
-                element.classList.toggle('enlarged');
+            // Array of all images for navigation
+            const galleryImages = [
+                'skullcrush/mainmenu_1.jpg',
+                'skullcrush/ui_mainmenu.png',
+                'skullcrush/level_design_1.jpg',
+                'skullcrush/level_design_2.jpg',
+                'skullcrush/level_design_3.jpg',
+                'skullcrush/level_design_4.jpg',
+                'skullcrush/level_design_5.jpg',
+                'skullcrush/sublevel_overall.jpg',
+                'skullcrush/sublevel_load.png',
+                'skullcrush/player_data.png',
+                'skullcrush/enemy_spawn.png',
+                'skullcrush/enemy_behaviour.png',
+                'skullcrush/door_bp.png',
+                'skullcrush/trap_bp.png',
+                'skullcrush/ui_player.png',
+                'skullcrush/ui_death.png'
+            ];
+            
+            let currentImageIndex = 0;
+            
+            // Improved image viewer functionality
+            function showImage(imageSrc) {
+                const overlay = document.getElementById('imageOverlay');
+                const image = document.getElementById('enlargedImage');
+                
+                // Extract the actual image path from the background-image style if needed
+                if (typeof imageSrc === 'string' && imageSrc.includes('url(')) {
+                    // Extract the URL from the background-image style
+                    const match = imageSrc.match(/url\(['"]?([^'"]+)['"]?\)/);
+                    if (match && match[1]) {
+                        imageSrc = match[1];
+                    }
+                }
+                
+                // Set the current image index
+                currentImageIndex = galleryImages.indexOf(imageSrc);
+                if (currentImageIndex === -1) currentImageIndex = 0; // Fallback if not found
+                
+                // Set the image source
+                image.src = imageSrc;
+                
+                // Show the overlay
+                overlay.classList.add('active');
+                
+                // Prevent scrolling on the body
+                document.body.style.overflow = 'hidden';
+                
+                // Add escape key listener
+                document.addEventListener('keydown', handleKeyPress);
+                
+                // Add click outside to close
+                overlay.addEventListener('click', handleOverlayClick);
+            }
+            
+            function hideImage() {
+                const overlay = document.getElementById('imageOverlay');
+                
+                // Hide the overlay
+                overlay.classList.remove('active');
+                
+                // Re-enable scrolling
+                document.body.style.overflow = '';
+                
+                // Remove event listeners
+                document.removeEventListener('keydown', handleKeyPress);
+                overlay.removeEventListener('click', handleOverlayClick);
+            }
+            
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function handleKeyPress(event) {
+                switch(event.key) {
+                    case 'Escape':
+                        hideImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                }
+            }
+            
+            function handleOverlayClick(event) {
+                // Close only if clicking on the overlay background, not the image or navigation buttons
+                if (event.target === document.getElementById('imageOverlay')) {
+                    hideImage();
+                }
             }
 
             function scrollToSection(sectionId) {
@@ -124,13 +341,12 @@
                 // Construct the URL with the section ID appended as a hash
                 const targetUrl = indexPageUrl + '#' + sectionId;
 
-                // Navigate to the constructed URL
+                // Navigate to the URL
                 window.location.href = targetUrl;
             }
 
             let mybutton = document.getElementById("myBtn");
 
-            // When the user scrolls down 20px from the top of the document, show the button
             window.onscroll = function() {scrollFunction()};
 
             function scrollFunction() {
@@ -141,7 +357,6 @@
               }
             }
 
-            // When the user clicks on the button, scroll to the top of the document
             function topFunction() {
               document.body.scrollTop = 0;
               document.documentElement.scrollTop = 0;

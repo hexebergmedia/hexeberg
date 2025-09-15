@@ -10,6 +10,112 @@
     <link rel="icon" type="image/x-icon" href="./favicon.png">
     <link rel="stylesheet" href="styles_gabz.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Improved image viewer styles */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .enlarged-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-button {
+            left: 20px;
+        }
+        
+        .next-button {
+            right: 20px;
+        }
+        
+        /* Add cursor pointer to clickable images */
+        .column-link[onclick] {
+            cursor: pointer;
+        }
+        
+        /* For mobile devices */
+        @media (max-width: 768px) {
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            
+            .prev-button {
+                left: 10px;
+            }
+            
+            .next-button {
+                right: 10px;
+            }
+        }
+    </style>
 </head>
     <body>
         <header class="header">
@@ -42,38 +148,38 @@
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Logo</em><br>Logoen er basert på Gabz sine tidligere livestreams på Twitch.tv hvor han ofte brukte karakteren “Rocket” fra Guardians of the Galaxy når han viste frem ting på streamen sin. Dette ble etterhvert kjennetegnet hans, så da vi skulle gjøre Gabz mer kommersielt, laget jeg en modernisert versjon av den tidligere logoen hans.<br></p></div>
+                <div class="column"><p><em>Logo</em><br>Logoen er basert på Gabz sine tidligere livestreams på Twitch.tv hvor han ofte brukte karakteren "Rocket" fra Guardians of the Galaxy når han viste frem ting på streamen sin. Dette ble etterhvert kjennetegnet hans, så da vi skulle gjøre Gabz mer kommersielt, laget jeg en modernisert versjon av den tidligere logoen hans.<br></p></div>
                 <div class="column"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_logo.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_old_logo.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_logo.jpg');" onclick="showImage('gabz/gabz_logo.jpg', 0)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_old_logo.png');" onclick="showImage('gabz/gabz_old_logo.png', 1)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_rocket.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_rocket_gta.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_rocket.png');" onclick="showImage('gabz/gabz_rocket.png', 2)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_rocket_gta.jpg');" onclick="showImage('gabz/gabz_rocket_gta.jpg', 3)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
                 <div class="column"><p><em>Videoproduksjon</em><br>Min rolle i videoproduksjonen ble å utarbeide hvordan videoene skulle se ut i sin helhet. Med alt fra effekter, hvordan tekst skal se ut, kameravinkler, musikkvalg og bevaring av det fremtidige varemerket.<br></p></div>
-                <div class="column"><p><em>Konseptutvikling</em><br>Vi begynte med samme "hype"-stil som Need for Speed Heat reveal traileren, som også var i samsvar med interiøret vi hadde laget basert på varehuset i Need for Speed spillet. Hvilket ble tatt godt imot som første lansering, men vi fant ut i etterkant at det ble en vanskelig stil å opprettholde og at vi ønsket en mer universell musikksmak for å treffe så mange potensielle kunder som mulig.<br><br>Så i senere videoer valgte vi å gå for en “upbeat synthwave” stil for å beholde det raske tempoet og samtidig treffe en bredere kundebase. I tillegg til dette så valgte vi å utarbeide “astronaut karakteren” for å ha et ekstra holdepunkt for seeren at dette er en Gabz-produksjon.<br></p></div>
+                <div class="column"><p><em>Konseptutvikling</em><br>Vi begynte med samme "hype"-stil som Need for Speed Heat reveal traileren, som også var i samsvar med interiøret vi hadde laget basert på varehuset i Need for Speed spillet. Hvilket ble tatt godt imot som første lansering, men vi fant ut i etterkant at det ble en vanskelig stil å opprettholde og at vi ønsket en mer universell musikksmak for å treffe så mange potensielle kunder som mulig.<br><br>Så i senere videoer valgte vi å gå for en "upbeat synthwave" stil for å beholde det raske tempoet og samtidig treffe en bredere kundebase. I tillegg til dette så valgte vi å utarbeide "astronaut karakteren" for å ha et ekstra holdepunkt for seeren at dette er en Gabz-produksjon.<br></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_video_before_1.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_video_after_1.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_video_before_1.jpg');" onclick="showImage('gabz/gabz_video_before_1.jpg', 4)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_video_after_1.jpg');" onclick="showImage('gabz/gabz_video_after_1.jpg', 5)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_video_before_2.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_video_after_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_video_before_2.jpg');" onclick="showImage('gabz/gabz_video_before_2.jpg', 6)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_video_after_2.jpg');" onclick="showImage('gabz/gabz_video_after_2.jpg', 7)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-video">
@@ -89,8 +195,8 @@
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_char.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_char_vid_1.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_char.jpg');" onclick="showImage('gabz/gabz_char.jpg', 8)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_char_vid_1.jpg');" onclick="showImage('gabz/gabz_char_vid_1.jpg', 9)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-video">
@@ -112,20 +218,20 @@
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_lock_before.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_lock_after.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_lock_before.png');" onclick="showImage('gabz/gabz_lock_before.png', 10)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_lock_after.png');" onclick="showImage('gabz/gabz_lock_after.png', 11)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_arm_before.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_arm_after.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_arm_before.png');" onclick="showImage('gabz/gabz_arm_before.png', 12)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_arm_after.png');" onclick="showImage('gabz/gabz_arm_after.png', 13)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_shoot.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gabz/gabz_stairs.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_shoot.png');" onclick="showImage('gabz/gabz_shoot.png', 14)"></div>
+                <div class="column column-link" style="background-image: url('gabz/gabz_stairs.png');" onclick="showImage('gabz/gabz_stairs.png', 15)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-waves">
@@ -149,12 +255,113 @@
         </main>
 
         <footer class="footer">
-            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+            <div class="column"><p>© 2025 Ole K. Hexeberg</p></div>
         </footer>
 
+        <!-- Image Viewer Overlay -->
+        <div class="image-overlay" id="imageOverlay">
+            <div class="close-button" onclick="hideImage()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="nav-button prev-button" onclick="showPrevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <img class="enlarged-image" id="enlargedImage" src="" alt="Enlarged Image">
+            <div class="nav-button next-button" onclick="showNextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
         <script>
-            function toggleImageSize(element) {
-                element.classList.toggle('enlarged');
+            // Array of all images for navigation
+            const galleryImages = [
+                'gabz/gabz_logo.jpg',
+                'gabz/gabz_old_logo.png',
+                'gabz/gabz_rocket.png',
+                'gabz/gabz_rocket_gta.jpg',
+                'gabz/gabz_video_before_1.jpg',
+                'gabz/gabz_video_after_1.jpg',
+                'gabz/gabz_video_before_2.jpg',
+                'gabz/gabz_video_after_2.jpg',
+                'gabz/gabz_char.jpg',
+                'gabz/gabz_char_vid_1.jpg',
+                'gabz/gabz_lock_before.png',
+                'gabz/gabz_lock_after.png',
+                'gabz/gabz_arm_before.png',
+                'gabz/gabz_arm_after.png',
+                'gabz/gabz_shoot.png',
+                'gabz/gabz_stairs.png'
+            ];
+            
+            let currentImageIndex = 0;
+            
+            // Improved image viewer functionality
+            function showImage(imageSrc, index) {
+                const overlay = document.getElementById('imageOverlay');
+                const image = document.getElementById('enlargedImage');
+                
+                // Set the current image index
+                currentImageIndex = index !== undefined ? index : galleryImages.indexOf(imageSrc);
+                
+                // Set the image source
+                image.src = imageSrc;
+                
+                // Show the overlay
+                overlay.classList.add('active');
+                
+                // Prevent scrolling on the body
+                document.body.style.overflow = 'hidden';
+                
+                // Add escape key listener
+                document.addEventListener('keydown', handleKeyPress);
+                
+                // Add click outside to close
+                overlay.addEventListener('click', handleOverlayClick);
+            }
+            
+            function hideImage() {
+                const overlay = document.getElementById('imageOverlay');
+                
+                // Hide the overlay
+                overlay.classList.remove('active');
+                
+                // Re-enable scrolling
+                document.body.style.overflow = '';
+                
+                // Remove event listeners
+                document.removeEventListener('keydown', handleKeyPress);
+                overlay.removeEventListener('click', handleOverlayClick);
+            }
+            
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function handleKeyPress(event) {
+                switch(event.key) {
+                    case 'Escape':
+                        hideImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                }
+            }
+            
+            function handleOverlayClick(event) {
+                // Close only if clicking on the overlay background, not the image or navigation buttons
+                if (event.target === document.getElementById('imageOverlay')) {
+                    hideImage();
+                }
             }
 
             function scrollToSection(sectionId) {
@@ -164,10 +371,11 @@
                 // Construct the URL with the section ID appended as a hash
                 const targetUrl = indexPageUrl + '#' + sectionId;
 
-                // Navigate to the constructed URL
+                // Navigate to the URL
                 window.location.href = targetUrl;
             }
 
+            // Get the button
             let mybutton = document.getElementById("myBtn");
 
             // When the user scrolls down 20px from the top of the document, show the button

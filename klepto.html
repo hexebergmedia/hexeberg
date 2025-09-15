@@ -10,6 +10,112 @@
     <link rel="icon" type="image/x-icon" href="./favicon.png">
     <link rel="stylesheet" href="styles_klepto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Improved image viewer styles */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .enlarged-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-button {
+            left: 20px;
+        }
+        
+        .next-button {
+            right: 20px;
+        }
+        
+        /* Add cursor pointer to clickable images */
+        .column-link[onclick] {
+            cursor: pointer;
+        }
+        
+        /* For mobile devices */
+        @media (max-width: 768px) {
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            
+            .prev-button {
+                left: 10px;
+            }
+            
+            .next-button {
+                right: 10px;
+            }
+        }
+    </style>
 </head>
     <body>
         <header class="header">
@@ -37,19 +143,19 @@
             <section class="flex-container-overview">
                 <div class="column"></div>
                 <div class="column"><p><em>Mine roller</em><br>Merkevarebygging<br>Markedsføring<br>Markedsstrategi<br>Animasjon<br>UI/UX<br>3D Modellering<br>Konseptutvikling<br>Systemutvikling innen UE Blueprints<br>Lyd design<br><br><br><em>Tidslinje & Status</em><br>Pågående. <em>Start August 2024</em></p></div>
-                <div class="column"><p><em>Innhold</em><br>Kleptomania er resultatet av å prøve seg på noe man egentlig trodde man ikke kunne få til. Hele prosjektet gikk fra en helg med testing og systemutvikling, til en uke ekstra for videreutvikling. Og plutselig lagde man en video for å se an interessen på prosjektet, som fikk veldig høyt engasjement.<br><br>Selve spill-idèen er inspirert av spillene “Hitman” og “Payday” som kombinert handler om stjeling, å bevege seg rundt uten å være synlig, oppdrag med flere måter å løse problemstillinger på og parkour.<br><br>Å lage et helt spill alene som skal selges til kunder innebærer veldig mange forskjellige roller og har prøvd å skape et innblikk i prosessen nedenfor. Men det er også mulig å se på videoene jeg har laget som er tilgjengelig <a href="https://www.youtube.com/@NoobySoft/videos" target="_blank">her.</p></a></p></div>
+                <div class="column"><p><em>Innhold</em><br>Kleptomania er resultatet av å prøve seg på noe man egentlig trodde man ikke kunne få til. Hele prosjektet gikk fra en helg med testing og systemutvikling, til en uke ekstra for videreutvikling. Og plutselig lagde man en video for å se an interessen på prosjektet, som fikk veldig høyt engasjement.<br><br>Selve spill-idèen er inspirert av spillene "Hitman" og "Payday" som kombinert handler om stjeling, å bevege seg rundt uten å være synlig, oppdrag med flere måter å løse problemstillinger på og parkour.<br><br>Å lage et helt spill alene som skal selges til kunder innebærer veldig mange forskjellige roller og har prøvd å skape et innblikk i prosessen nedenfor. Men det er også mulig å se på videoene jeg har laget som er tilgjengelig <a href="https://www.youtube.com/@NoobySoft/videos" target="_blank">her.</p></a></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Logo</em><br>Selve navnet Kleptomania er inspirert av “Kleptomani” som er en psykisk lidelse kjennetegnet ved gjentatt sviktende kontroll over impulser til å stjele. Jeg fikk en idé om hvordan logo-animasjonen kunne se ut veldig tidlig, så det ble å bygge ikonet og den fulle logoen rundt det. Selve ikonet er laget ved hjelp av AI-programmet “Stable Diffusion” for å generere titalls sketcher på sekunder. Deretter laget jeg en hybridversjon av de jeg likte best selv.<br></p></div>
+                <div class="column"><p><em>Logo</em><br>Selve navnet Kleptomania er inspirert av "Kleptomani" som er en psykisk lidelse kjennetegnet ved gjentatt sviktende kontroll over impulser til å stjele. Jeg fikk en idé om hvordan logo-animasjonen kunne se ut veldig tidlig, så det ble å bygge ikonet og den fulle logoen rundt det. Selve ikonet er laget ved hjelp av AI-programmet "Stable Diffusion" for å generere titalls sketcher på sekunder. Deretter laget jeg en hybridversjon av de jeg likte best selv.<br></p></div>
                 <div class="column"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/klepto_logo_full.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/klepto_logo_icon.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/klepto_logo_full.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/klepto_logo_icon.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-video">
@@ -65,26 +171,26 @@
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Promo</em><br>Selve promo materiale er en bildeserie som har mål om å gi et innblikk i hvordan spillet kommer til å se ut til slutt. Disse bildene ble laget ved å iscenesette forskjellige scenarioer som skal få frem “stealth, stealing and parkour” elementene i spillet. Samt ble det laget en kort teaservideo for å gi en bedre følelse av at dette er et seriøst produkt.</p></div>
-                <div class="column"><p><em>Steam</em><br>En ting som er veldig viktig når man skal selge et spill på Steam er noe man kaller “wishlist” som er en ønskeliste kunder kan bruke for å bli påminnet at spillet de så på som interessant ble lansert. Hvilket gjorde at jeg så på å lage en “steam store page” så tidlig som mulig som en nødvendighet.</p></div>
+                <div class="column"><p><em>Promo</em><br>Selve promo materiale er en bildeserie som har mål om å gi et innblikk i hvordan spillet kommer til å se ut til slutt. Disse bildene ble laget ved å iscenesette forskjellige scenarioer som skal få frem "stealth, stealing and parkour" elementene i spillet. Samt ble det laget en kort teaservideo for å gi en bedre følelse av at dette er et seriøst produkt.</p></div>
+                <div class="column"><p><em>Steam</em><br>En ting som er veldig viktig når man skal selge et spill på Steam er noe man kaller "wishlist" som er en ønskeliste kunder kan bruke for å bli påminnet at spillet de så på som interessant ble lansert. Hvilket gjorde at jeg så på å lage en "steam store page" så tidlig som mulig som en nødvendighet.</p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/store_screenshot_chase.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/store_screenshot_parkour.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/store_screenshot_chase.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/store_screenshot_parkour.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/store_screenshot_stealth.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/promo_mat_4.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/store_screenshot_stealth.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/promo_mat_4.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/promo_mat_3.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/promo_mat_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/promo_mat_3.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/promo_mat_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
@@ -95,128 +201,128 @@
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/overlook_testarea.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/anim_retarget_4.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/overlook_testarea.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/anim_retarget_4.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/char_skel_retarget.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/anim_retarget_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/char_skel_retarget.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/anim_retarget_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/anim_blendspace.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/anim_blueprint.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/anim_blendspace.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/anim_blueprint.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/char_skel_blender.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/char_main_inedit.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/char_skel_blender.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/char_main_inedit.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/foot_ik_1.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/foot_ik_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/foot_ik_1.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/foot_ik_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_patrol_inedit.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_patrol_bt.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_patrol_inedit.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_patrol_bt.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/noise_inst_inedit.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/noise_inst.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/noise_inst_inedit.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/noise_inst.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_civ_detect.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_civ_idle_bt.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_civ_detect.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_civ_idle_bt.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_patrol_data.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_patrol_detect.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_patrol_data.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_patrol_detect.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_pawn.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/ai_patrol_setdata.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_pawn.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/ai_patrol_setdata.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_interact_inedit.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_obj_int.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_interact_inedit.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_obj_int.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_hud_data.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_ui.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_hud_data.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_ui.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_obj_s.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_sel_s.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_obj_s.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_sel_s.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_start_data.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_slot_widget.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_start_data.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_slot_widget.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_widget_bp.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/mission_select_widget.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_widget_bp.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/mission_select_widget.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/level_concept_1.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/level_concept_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/level_concept_1.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/level_concept_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/level_concept_3.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/level_concept_4.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/level_concept_3.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/level_concept_4.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/object_traversal_1.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/object_traversal_2.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/object_traversal_1.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/object_traversal_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/sublevel_stream.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/sublevel_data.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/sublevel_stream.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/sublevel_data.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/foley_mat_data.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/foley_mat_ex.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/foley_mat_data.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/foley_mat_ex.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('klepto/voice_lines.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('klepto/voice_elevenlabs.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('klepto/voice_lines.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('klepto/voice_elevenlabs.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-waves">
@@ -240,14 +346,160 @@
         </main>
 
         <footer class="footer">
-            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+            <div class="column"><p>© 2025 Ole K. Hexeberg</p></div>
         </footer>
 
+        <!-- Image Viewer Overlay -->
+        <div class="image-overlay" id="imageOverlay">
+            <div class="close-button" onclick="hideImage()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="nav-button prev-button" onclick="showPrevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <img class="enlarged-image" id="enlargedImage" src="" alt="Enlarged Image">
+            <div class="nav-button next-button" onclick="showNextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
         <script>
-            function toggleImageSize(element) {
-                element.classList.toggle('enlarged');
+            // Array of all images for navigation
+            const galleryImages = [
+                'klepto/klepto_logo_full.png',
+                'klepto/klepto_logo_icon.png',
+                'klepto/store_screenshot_chase.png',
+                'klepto/store_screenshot_parkour.png',
+                'klepto/store_screenshot_stealth.png',
+                'klepto/promo_mat_4.png',
+                'klepto/promo_mat_3.jpg',
+                'klepto/promo_mat_2.jpg',
+                'klepto/overlook_testarea.jpg',
+                'klepto/anim_retarget_4.jpg',
+                'klepto/char_skel_retarget.jpg',
+                'klepto/anim_retarget_2.jpg',
+                'klepto/anim_blendspace.png',
+                'klepto/anim_blueprint.png',
+                'klepto/char_skel_blender.png',
+                'klepto/char_main_inedit.jpg',
+                'klepto/foot_ik_1.png',
+                'klepto/foot_ik_2.jpg',
+                'klepto/ai_patrol_inedit.jpg',
+                'klepto/ai_patrol_bt.png',
+                'klepto/noise_inst_inedit.jpg',
+                'klepto/noise_inst.png',
+                'klepto/ai_civ_detect.png',
+                'klepto/ai_civ_idle_bt.png',
+                'klepto/ai_patrol_data.png',
+                'klepto/ai_patrol_detect.png',
+                'klepto/ai_pawn.png',
+                'klepto/ai_patrol_setdata.png',
+                'klepto/mission_interact_inedit.png',
+                'klepto/mission_obj_int.png',
+                'klepto/mission_hud_data.png',
+                'klepto/mission_ui.png',
+                'klepto/mission_obj_s.png',
+                'klepto/mission_sel_s.png',
+                'klepto/mission_start_data.png',
+                'klepto/mission_slot_widget.png',
+                'klepto/mission_widget_bp.png',
+                'klepto/mission_select_widget.png',
+                'klepto/level_concept_1.jpg',
+                'klepto/level_concept_2.jpg',
+                'klepto/level_concept_3.jpg',
+                'klepto/level_concept_4.jpg',
+                'klepto/object_traversal_1.jpg',
+                'klepto/object_traversal_2.jpg',
+                'klepto/sublevel_stream.jpg',
+                'klepto/sublevel_data.png',
+                'klepto/foley_mat_data.png',
+                'klepto/foley_mat_ex.jpg',
+                'klepto/voice_lines.png',
+                'klepto/voice_elevenlabs.png'
+            ];
+            
+            let currentImageIndex = 0;
+            
+            // Improved image viewer functionality
+            function showImage(imageSrc) {
+                const overlay = document.getElementById('imageOverlay');
+                const image = document.getElementById('enlargedImage');
+                
+                // Extract the actual image path from the background-image style if needed
+                if (typeof imageSrc === 'string' && imageSrc.includes('url(')) {
+                    // Extract the URL from the background-image style
+                    const match = imageSrc.match(/url\(['"]?([^'"]+)['"]?\)/);
+                    if (match && match[1]) {
+                        imageSrc = match[1];
+                    }
+                }
+                
+                // Set the current image index
+                currentImageIndex = galleryImages.indexOf(imageSrc);
+                if (currentImageIndex === -1) currentImageIndex = 0; // Fallback if not found
+                
+                // Set the image source
+                image.src = imageSrc;
+                
+                // Show the overlay
+                overlay.classList.add('active');
+                
+                // Prevent scrolling on the body
+                document.body.style.overflow = 'hidden';
+                
+                // Add escape key listener
+                document.addEventListener('keydown', handleKeyPress);
+                
+                // Add click outside to close
+                overlay.addEventListener('click', handleOverlayClick);
+            }
+            
+            function hideImage() {
+                const overlay = document.getElementById('imageOverlay');
+                
+                // Hide the overlay
+                overlay.classList.remove('active');
+                
+                // Re-enable scrolling
+                document.body.style.overflow = '';
+                
+                // Remove event listeners
+                document.removeEventListener('keydown', handleKeyPress);
+                overlay.removeEventListener('click', handleOverlayClick);
+            }
+            
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function handleKeyPress(event) {
+                switch(event.key) {
+                    case 'Escape':
+                        hideImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                }
+            }
+            
+            function handleOverlayClick(event) {
+                // Close only if clicking on the overlay background, not the image or navigation buttons
+                if (event.target === document.getElementById('imageOverlay')) {
+                    hideImage();
+                }
             }
 
+            // Keep the original scrollToSection function
             function scrollToSection(sectionId) {
                 // Construct the URL of the index.html page
                 const indexPageUrl = window.location.origin + "/index.html";
@@ -255,13 +507,13 @@
                 // Construct the URL with the section ID appended as a hash
                 const targetUrl = indexPageUrl + '#' + sectionId;
 
-                // Navigate to the constructed URL
+                // Navigate to the URL
                 window.location.href = targetUrl;
             }
 
+            // Keep the original scroll to top functionality
             let mybutton = document.getElementById("myBtn");
 
-            // When the user scrolls down 20px from the top of the document, show the button
             window.onscroll = function() {scrollFunction()};
 
             function scrollFunction() {
@@ -272,7 +524,6 @@
               }
             }
 
-            // When the user clicks on the button, scroll to the top of the document
             function topFunction() {
               document.body.scrollTop = 0;
               document.documentElement.scrollTop = 0;

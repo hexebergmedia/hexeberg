@@ -10,6 +10,112 @@
     <link rel="icon" type="image/x-icon" href="./favicon.png">
     <link rel="stylesheet" href="styles_gruup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Improved image viewer styles */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .enlarged-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-button {
+            left: 20px;
+        }
+        
+        .next-button {
+            right: 20px;
+        }
+        
+        /* Add cursor pointer to clickable images */
+        .column-link[onclick] {
+            cursor: pointer;
+        }
+        
+        /* For mobile devices */
+        @media (max-width: 768px) {
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            
+            .prev-button {
+                left: 10px;
+            }
+            
+            .next-button {
+                right: 10px;
+            }
+        }
+    </style>
 </head>
     <body>
         <header class="header">
@@ -37,19 +143,19 @@
             <section class="flex-container-overview">
                 <div class="column"></div>
                 <div class="column"><p><em>Mine roller</em><br>Merkevarebygging<br>Markedsføring<br>Markedsstrategi<br>Reklame produksjon<br>UI/UX for nettside<br>3D Modellering<br>Konvertering fra Blender til GTA V<br><br><br><em>Tidslinje & Status</em><br>Pågående. <em>Lansert Mai 2024</em></p></div>
-                <div class="column"><p><em>Innhold</em><br>Gruup er en nettbutikk med formål om å utnytte et nisje marked som fortsatt har et stort potensiale innen salg.<br><br>Det som selges her er “game assets” for spillet GTA 5, via plattformen FiveM. Dette gjøres gjennom FiveM sin partner, Tebex. Jeg har tidligere bygget opp lignende prosjekter og denne gangen er dette et sideprosjekt jeg gjør helt på egen hånd.</p></div>
+                <div class="column"><p><em>Innhold</em><br>Gruup er en nettbutikk med formål om å utnytte et nisje marked som fortsatt har et stort potensiale innen salg.<br><br>Det som selges her er "game assets" for spillet GTA 5, via plattformen FiveM. Dette gjøres gjennom FiveM sin partner, Tebex. Jeg har tidligere bygget opp lignende prosjekter og denne gangen er dette et sideprosjekt jeg gjør helt på egen hånd.</p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Logo</em><br>Navnet Gruup er et ordspill på “Group” eller “Gruppe” som er et enkelt navn å huske og er ment til å symbolisere tilhørighet. Logomerket i seg selv er designet med tanke på diverse animasjons idéer til fremtidige videoer.<br></p></div>
+                <div class="column"><p><em>Logo</em><br>Navnet Gruup er et ordspill på "Group" eller "Gruppe" som er et enkelt navn å huske og er ment til å symbolisere tilhørighet. Logomerket i seg selv er designet med tanke på diverse animasjons idéer til fremtidige videoer.<br></p></div>
                 <div class="column"><p><em>Intro video</em><br>Introen er laget for å gi kundene et umiddelbart tegn på at det er et Gruup produkt de er i ferd med å se, som senere vil forbindes med høy kvalitet.<br></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/logo_icon_normal.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/logo_icon.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/logo_icon_normal.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/logo_icon.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <!--<section class="flex-container-video">
@@ -75,8 +181,8 @@
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Reklamefilm</em><br>Reklamefilmen nedenfor spiller tidlig på den anerkjente serien “Breaking Bad” ved å ha en referanse til “RV Meth Lab'en" de har blitt så kjente for. Tanken her var å spille på en “morsom” idé om at personene som kjører har leid bilen midlertidig for å produsere dop og skynder seg tilbake til Touchdown Car Rentals for å få den levert i tide.<br><br>Vedlagt kan man se et par bilder fra “Rockstar Editor” som er GTA 5 sitt svar på en mulighet for bedre kameravinkler og etterarbeid.<br></p></div>
-                <div class="column"><p><em>Tidligere konsept</em><br>Som man kan se er det også lagt ved et manus som var den originale idéen til reklamen. Hvor jeg fant ut i etterkant av voice over og litt innspilling at det ikke ble et bra nok produkt. Og endte opp med å revidere videoen til et annet konsept. Sluttresultatet er faktisk video nr 3 fordi det også ble laget en annen versjon med sangen “Rayelle - Get Dat”.<br></p></div>
+                <div class="column"><p><em>Reklamefilm</em><br>Reklamefilmen nedenfor spiller tidlig på den anerkjente serien "Breaking Bad" ved å ha en referanse til "RV Meth Lab'en" de har blitt så kjente for. Tanken her var å spille på en "morsom" idé om at personene som kjører har leid bilen midlertidig for å produsere dop og skynder seg tilbake til Touchdown Car Rentals for å få den levert i tide.<br><br>Vedlagt kan man se et par bilder fra "Rockstar Editor" som er GTA 5 sitt svar på en mulighet for bedre kameravinkler og etterarbeid.<br></p></div>
+                <div class="column"><p><em>Tidligere konsept</em><br>Som man kan se er det også lagt ved et manus som var den originale idéen til reklamen. Hvor jeg fant ut i etterkant av voice over og litt innspilling at det ikke ble et bra nok produkt. Og endte opp med å revidere videoen til et annet konsept. Sluttresultatet er faktisk video nr 3 fordi det også ble laget en annen versjon med sangen "Rayelle - Get Dat".<br></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-video">
@@ -92,74 +198,74 @@
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_script.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_redit_1.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_script.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_redit_1.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_redit_2.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_redit_3.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_redit_2.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_redit_3.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Behind the scenes</em><br>Det er ikke bare å trykke “spill inn” og la ting gå sin gang selv om videoen er laget i et spill. I dette tilfellet ble det også litt programmering for å fremstille bilene på parkeringsplassen, litt fysikk for å slenge karakteren i taket og oppsett av statister med hver sin animasjon.<br><br>Alt av audio har også blitt lagt på i etterkant med hjelp av lydeffekter fra Epidemic Sound.<br></p></div>
-                <div class="column"><p><em>Karakter</em><br>Som man kan se i videoen så er det en mann i dress som også er påkledd andre klær i løpet av hele videoen. Denne fyren kommer til å være med i alle promoteringer av Gruup’s fremtidige prosjekter. For å gi kundene et ekstra lite punkt til å kjenne på tilhørigheten med merkevaren.<br></p></div>
+                <div class="column"><p><em>Behind the scenes</em><br>Det er ikke bare å trykke "spill inn" og la ting gå sin gang selv om videoen er laget i et spill. I dette tilfellet ble det også litt programmering for å fremstille bilene på parkeringsplassen, litt fysikk for å slenge karakteren i taket og oppsett av statister med hver sin animasjon.<br><br>Alt av audio har også blitt lagt på i etterkant med hjelp av lydeffekter fra Epidemic Sound.<br></p></div>
+                <div class="column"><p><em>Karakter</em><br>Som man kan se i videoen så er det en mann i dress som også er påkledd andre klær i løpet av hele videoen. Denne fyren kommer til å være med i alle promoteringer av Gruup's fremtidige prosjekter. For å gi kundene et ekstra lite punkt til å kjenne på tilhørigheten med merkevaren.<br></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_char.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_yeet_code.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_char.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_yeet_code.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_veh.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_veh_code.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_veh.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_veh_code.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_peds.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_ped_code.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_peds.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_ped_code.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_video_bts.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_audio_files.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_video_bts.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_audio_files.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
                 <div class="column"><p><em>3D Modellering</em><br>Det som er fint med 3D modellering for GTA 5 av alle ting er at man ikke behøver å lage hver eneste boks, lampe eller stol. Fordi det allerede er et repertoar av modeller og teksturer tilgjengelig. Man ender selvsagt opp med å modellere mesteparten selv allikevel, men det gjør jobben en god del lettere.<br></p></div>
-                <div class="column"><p><em>Innblikk</em><br>Hovedgrunnlaget til at de fleste folk ikke tar del i kjøp og salg via GTA 5 er fordi systemene man må rundt for å få produktet sitt fra Blender til selve spillet er en større prosess enn det man kanskje skulle tro. Nedenfor kan man se et lite innblikk av filsystemet til programmet “Codewalker”.<br></p></div>
+                <div class="column"><p><em>Innblikk</em><br>Hovedgrunnlaget til at de fleste folk ikke tar del i kjøp og salg via GTA 5 er fordi systemene man må rundt for å få produktet sitt fra Blender til selve spillet er en større prosess enn det man kanskje skulle tro. Nedenfor kan man se et lite innblikk av filsystemet til programmet "Codewalker".<br></p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_td_model.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_esc_model.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_td_model.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_esc_model.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_codewalker.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_ytyp.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_codewalker.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_ytyp.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_td_cw.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_esc_cw.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_td_cw.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_esc_cw.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_td_cw_int.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/gruup_esc_cw_int.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_td_cw_int.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/gruup_esc_cw_int.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
@@ -170,32 +276,32 @@
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/ext_images_01.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/ext_images_02.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/ext_images_01.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/ext_images_02.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/ext_images_03.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/ext_images_04.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/ext_images_03.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/ext_images_04.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/ext_images_05.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/ext_images_06.jpg');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/ext_images_05.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/ext_images_06.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/escalera_int_01.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/escalera_int_05.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/escalera_int_01.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/escalera_int_05.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gruup/touchdown_int_01.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gruup/touchdown_int_02.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gruup/touchdown_int_01.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gruup/touchdown_int_02.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-waves">
@@ -219,14 +325,142 @@
         </main>
 
         <footer class="footer">
-            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+            <div class="column"><p>© 2025 Ole K. Hexeberg</p></div>
         </footer>
 
+        <!-- Image Viewer Overlay -->
+        <div class="image-overlay" id="imageOverlay">
+            <div class="close-button" onclick="hideImage()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="nav-button prev-button" onclick="showPrevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <img class="enlarged-image" id="enlargedImage" src="" alt="Enlarged Image">
+            <div class="nav-button next-button" onclick="showNextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
         <script>
-            function toggleImageSize(element) {
-                element.classList.toggle('enlarged');
+            // Array of all images for navigation
+            const galleryImages = [
+                'gruup/logo_icon_normal.jpg',
+                'gruup/logo_icon.jpg',
+                'gruup/gruup_script.png',
+                'gruup/gruup_redit_1.jpg',
+                'gruup/gruup_redit_2.jpg',
+                'gruup/gruup_redit_3.jpg',
+                'gruup/gruup_char.jpg',
+                'gruup/gruup_yeet_code.png',
+                'gruup/gruup_veh.jpg',
+                'gruup/gruup_veh_code.png',
+                'gruup/gruup_peds.jpg',
+                'gruup/gruup_ped_code.png',
+                'gruup/gruup_video_bts.png',
+                'gruup/gruup_audio_files.png',
+                'gruup/gruup_td_model.png',
+                'gruup/gruup_esc_model.png',
+                'gruup/gruup_codewalker.png',
+                'gruup/gruup_ytyp.png',
+                'gruup/gruup_td_cw.png',
+                'gruup/gruup_esc_cw.png',
+                'gruup/gruup_td_cw_int.png',
+                'gruup/gruup_esc_cw_int.png',
+                'gruup/ext_images_01.jpg',
+                'gruup/ext_images_02.jpg',
+                'gruup/ext_images_03.jpg',
+                'gruup/ext_images_04.jpg',
+                'gruup/ext_images_05.jpg',
+                'gruup/ext_images_06.jpg',
+                'gruup/escalera_int_01.png',
+                'gruup/escalera_int_05.png',
+                'gruup/touchdown_int_01.png',
+                'gruup/touchdown_int_02.png'
+            ];
+            
+            let currentImageIndex = 0;
+            
+            // Improved image viewer functionality
+            function showImage(imageSrc) {
+                const overlay = document.getElementById('imageOverlay');
+                const image = document.getElementById('enlargedImage');
+                
+                // Extract the actual image path from the background-image style if needed
+                if (typeof imageSrc === 'string' && imageSrc.includes('url(')) {
+                    // Extract the URL from the background-image style
+                    const match = imageSrc.match(/url\(['"]?([^'"]+)['"]?\)/);
+                    if (match && match[1]) {
+                        imageSrc = match[1];
+                    }
+                }
+                
+                // Set the current image index
+                currentImageIndex = galleryImages.indexOf(imageSrc);
+                if (currentImageIndex === -1) currentImageIndex = 0; // Fallback if not found
+                
+                // Set the image source
+                image.src = imageSrc;
+                
+                // Show the overlay
+                overlay.classList.add('active');
+                
+                // Prevent scrolling on the body
+                document.body.style.overflow = 'hidden';
+                
+                // Add escape key listener
+                document.addEventListener('keydown', handleKeyPress);
+                
+                // Add click outside to close
+                overlay.addEventListener('click', handleOverlayClick);
+            }
+            
+            function hideImage() {
+                const overlay = document.getElementById('imageOverlay');
+                
+                // Hide the overlay
+                overlay.classList.remove('active');
+                
+                // Re-enable scrolling
+                document.body.style.overflow = '';
+                
+                // Remove event listeners
+                document.removeEventListener('keydown', handleKeyPress);
+                overlay.removeEventListener('click', handleOverlayClick);
+            }
+            
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function handleKeyPress(event) {
+                switch(event.key) {
+                    case 'Escape':
+                        hideImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                }
+            }
+            
+            function handleOverlayClick(event) {
+                // Close only if clicking on the overlay background, not the image or navigation buttons
+                if (event.target === document.getElementById('imageOverlay')) {
+                    hideImage();
+                }
             }
 
+            // Keep the original scrollToSection function
             function scrollToSection(sectionId) {
                 // Construct the URL of the index.html page
                 const indexPageUrl = window.location.origin + "/index.html";
@@ -234,13 +468,13 @@
                 // Construct the URL with the section ID appended as a hash
                 const targetUrl = indexPageUrl + '#' + sectionId;
 
-                // Navigate to the constructed URL
+                // Navigate to the URL
                 window.location.href = targetUrl;
             }
 
+            // Keep the original scroll to top functionality
             let mybutton = document.getElementById("myBtn");
 
-            // When the user scrolls down 20px from the top of the document, show the button
             window.onscroll = function() {scrollFunction()};
 
             function scrollFunction() {
@@ -251,7 +485,6 @@
               }
             }
 
-            // When the user clicks on the button, scroll to the top of the document
             function topFunction() {
               document.body.scrollTop = 0;
               document.documentElement.scrollTop = 0;

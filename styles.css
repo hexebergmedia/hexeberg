@@ -340,6 +340,10 @@ a {
         flex-grow: 2;
     }
 
+    .profile-pic {
+        height: 300px;
+    }
+
     .flex-container-prosjekter {
         height: 350px;
     }
@@ -352,7 +356,14 @@ a {
     }
 
     .flex-container-meg {
-        height: 650px;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .profile-pic {
+        height: 400px;
+        max-width: 400px;
+        margin: 0 auto;
     }
 }
 
@@ -379,11 +390,46 @@ a {
     .flex-container-meg .column {
         height: auto;
         padding: 20px; /* Add some padding */
-        min-height: 250px;
+        min-height: auto;
+    }
+
+    .profile-pic-container {
+        padding: 10px;
+    }
+
+    .profile-pic {
+        height: 300px;
+        max-width: 300px;
     }
 
     .waves {
         height: 130px;
         min-height: 40px;
     }
+}
+
+@media (max-width: 480px) {
+    .profile-pic {
+        height: 250px;
+        max-width: 250px;
+    }
+}
+
+/* Add these new styles for the profile picture */
+.profile-pic-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.profile-pic {
+    width: 100%;
+    max-width: 350px;
+    height: 350px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

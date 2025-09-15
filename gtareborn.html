@@ -10,6 +10,112 @@
     <link rel="icon" type="image/x-icon" href="./favicon.png">
     <link rel="stylesheet" href="styles_gtareborn.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Improved image viewer styles */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .enlarged-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-button {
+            left: 20px;
+        }
+        
+        .next-button {
+            right: 20px;
+        }
+        
+        /* Add cursor pointer to clickable images */
+        .column-link[onclick] {
+            cursor: pointer;
+        }
+        
+        /* For mobile devices */
+        @media (max-width: 768px) {
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            
+            .prev-button {
+                left: 10px;
+            }
+            
+            .next-button {
+                right: 10px;
+            }
+        }
+    </style>
 </head>
     <body>
         <header class="header">
@@ -43,80 +149,80 @@
             <section class="flex-container-context">
                 <div class="column"></div>
                 <div class="column"><p><em>Trello</em><br>Før prosjektet ble satt i gang laget jeg et massivt Trello board for å kartlegge alt som var en nødvendighet for å konkurrere med GTA Online, hvilke systemer som allerede eksisterte og hvilke som kunne forbedres eller videreutvikles. Deretter ble det idémyldring for helt nye systemer, hvordan alt skulle fungere i praksis og en plan for inntektsgenerering. I etterkant brukte vi også samme Trello board for å dokumentere snippets av kode for enkelte systemer og kartlegging av hva som hadde blitt gjort.<br></p></div>
-                <div class="column"><p><em>GTA Reborn Logo</em><br>Den mest vanlige server typen man finner på FiveM er en “rollespill server”, som er noe helt annet enn det vi planla å lage med Reborn. Så da ble tanken med logoen at den skulle være så nær “GTA Online” logoen som mulig slik at folk forstod med en gang at dette var online relatert og ikke rollespill.</p></div>
+                <div class="column"><p><em>GTA Reborn Logo</em><br>Den mest vanlige server typen man finner på FiveM er en "rollespill server", som er noe helt annet enn det vi planla å lage med Reborn. Så da ble tanken med logoen at den skulle være så nær "GTA Online" logoen som mulig slik at folk forstod med en gang at dette var online relatert og ikke rollespill.</p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_trello_1.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_trello_2.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_trello_1.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_trello_2.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_gen_checklist.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_int_checklist.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_gen_checklist.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_int_checklist.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_notif_code.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_logo.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_notif_code.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_logo.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>UI / UX</em><br>Nedenfor kan du se eksempler på versjoner av notifikasjoner, progresjon-barer, interaksjonsknapper, karaktervalg, “start” valg, klesbutikk, bankran planlegging, utviklerverktøy, billøp og bilbutikk.<br></p></div>
+                <div class="column"><p><em>UI / UX</em><br>Nedenfor kan du se eksempler på versjoner av notifikasjoner, progresjon-barer, interaksjonsknapper, karaktervalg, "start" valg, klesbutikk, bankran planlegging, utviklerverktøy, billøp og bilbutikk.<br></p></div>
                 <!--<div class="column"><p><em>Tittel</em><br>Utfyllende tekst om prosjektet</p></div>-->
                 <div class="column"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_gen_ui.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_charselect.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_gen_ui.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_charselect.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_spawnselect.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_clothingstore.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_spawnselect.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_clothingstore.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_heist.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_tool.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_heist.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_tool.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_racing.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_vehicleshop.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_racing.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_vehicleshop.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Inntektsgenerering</em><br>I GTA 5 har Rockstar Games valgt å kalle sin “inntektsgenerering valuta” for “Shark cards", så jeg kom opp med vår egen versjon kalt “Camel cash”. Planen med CC var at spillerne våre kunne gå inn på nettsiden vår og kjøpe valuta i GTA Reborn. Denne valutaen kunne de da bruke for å enten konvertere CC til “vanlige dollar” eller beholde dem for å kjøpe eksklusive ting som krevde CC i tillegg til vanlige dollar. Planen var alltid at CC kunne skaffes av å gjøre oppdrag og slikt ved å spille som normalt, men også la folk bruke ekte penger for å få ting fortere hvis de ønsket det.<br><br>Nedenfor kan man se et eksempel på en av strategiene vi skulle ta i bruk, som er veldig vanlig hos blant annet casinoer. Tanken var å spille av en animasjon hvor det er et kamera som spinner rundt en koffert med penger som sprenger opp og utover når audio designet når klimaks. Dette ville da vært i takt med et nummer som i tillegg hadde tikket opp til mengden penger som hadde blitt kjøpt. Dette var for å gi kunden en god følelse etter sin fullførte transaksjon.</p></div>
-                <div class="column"><p><em>Camel Cash</em><br>Camel Cash ble det utvalgte navnet etter en rekke med idèmyldring og i etterkant nevnte min utvikler-partner at “Camel cigarettes” pleide å ha en maskott før i tiden som ble kalt “Joe Camel”. Dette var rundt tiden AI begynte å komme til lys og vi endte opp med å bruke “Stable Diffusion" for å trene opp en egen AI modell til å lage vår nye versjon av “Joe Camel” som var til bruk for fremtidige reklamer.</p></div>
+                <div class="column"><p><em>Inntektsgenerering</em><br>I GTA 5 har Rockstar Games valgt å kalle sin "inntektsgenerering valuta" for "Shark cards", så jeg kom opp med vår egen versjon kalt "Camel cash". Planen med CC var at spillerne våre kunne gå inn på nettsiden vår og kjøpe valuta i GTA Reborn. Denne valutaen kunne de da bruke for å enten konvertere CC til "vanlige dollar" eller beholde dem for å kjøpe eksklusive ting som krevde CC i tillegg til vanlige dollar. Planen var alltid at CC kunne skaffes av å gjøre oppdrag og slikt ved å spille som normalt, men også la folk bruke ekte penger for å få ting fortere hvis de ønsket det.<br><br>Nedenfor kan man se et eksempel på en av strategiene vi skulle ta i bruk, som er veldig vanlig hos blant annet casinoer. Tanken var å spille av en animasjon hvor det er et kamera som spinner rundt en koffert med penger som sprenger opp og utover når audio designet når klimaks. Dette ville da vært i takt med et nummer som i tillegg hadde tikket opp til mengden penger som hadde blitt kjøpt. Dette var for å gi kunden en god følelse etter sin fullførte transaksjon.</p></div>
+                <div class="column"><p><em>Camel Cash</em><br>Camel Cash ble det utvalgte navnet etter en rekke med idèmyldring og i etterkant nevnte min utvikler-partner at "Camel cigarettes" pleide å ha en maskott før i tiden som ble kalt "Joe Camel". Dette var rundt tiden AI begynte å komme til lys og vi endte opp med å bruke "Stable Diffusion" for å trene opp en egen AI modell til å lage vår nye versjon av "Joe Camel" som var til bruk for fremtidige reklamer.</p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_cameljoe.jpg');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_camelcash.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_cameljoe.jpg');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_camelcash.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_money_example.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_money_anim.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_money_example.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_money_anim.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_sound_1.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_sound_2.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_sound_1.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_sound_2.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-audio">
@@ -131,14 +237,14 @@
             </section>
             <section class="flex-container-context">
                 <div class="column"></div>
-                <div class="column"><p><em>Notifikasjoner</em><br>Tanken bak notifikasjoner var at alt fra små meldinger om nødvendig informasjon til bemerkelsesverdige hendelser skulle alltid føles riktig. Problematikken til GTA Online var at alle notifikasjoner var stort sett veldig like og endte opp med å bli irriterende for spillerne fordi det etterhvert føltes ut som telefonsalg trakassering.<br><br>Nedenfor kan man se eksempler på en stor hendelse som i dette tilfellet er at en spiller har gjort noe bra og har endt opp med å låse opp noe for sin relaterte “Career path”.</p></div>
-                <div class="column"><p><em>Career Path</em><br>I GTA 5 er det mange type grupperinger innenfor f.eks politiet, gjenger på gatene, bedrifter osv. Derfor valgte jeg å utvikle systemet “Career Path”. Dette var for å gi spillere et hav av muligheter for progresjon gjennom spesielle oppdrag for sin gruppe, prestasjoner, eksklusive biler, klær, våpen osv man kunne låse opp, skape et “rival miljø” og i tillegg sanke inn potensielle rollespill brukere fra andre servere.</p></div>
+                <div class="column"><p><em>Notifikasjoner</em><br>Tanken bak notifikasjoner var at alt fra små meldinger om nødvendig informasjon til bemerkelsesverdige hendelser skulle alltid føles riktig. Problematikken til GTA Online var at alle notifikasjoner var stort sett veldig like og endte opp med å bli irriterende for spillerne fordi det etterhvert føltes ut som telefonsalg trakassering.<br><br>Nedenfor kan man se eksempler på en stor hendelse som i dette tilfellet er at en spiller har gjort noe bra og har endt opp med å låse opp noe for sin relaterte "Career path".</p></div>
+                <div class="column"><p><em>Career Path</em><br>I GTA 5 er det mange type grupperinger innenfor f.eks politiet, gjenger på gatene, bedrifter osv. Derfor valgte jeg å utvikle systemet "Career Path". Dette var for å gi spillere et hav av muligheter for progresjon gjennom spesielle oppdrag for sin gruppe, prestasjoner, eksklusive biler, klær, våpen osv man kunne låse opp, skape et "rival miljø" og i tillegg sanke inn potensielle rollespill brukere fra andre servere.</p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_career.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_police_notif.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_career.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_police_notif.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-video">
@@ -166,25 +272,25 @@
             <section class="flex-container-context">
                 <div class="column"></div>
                 <div class="column"><p><em>3D Modellering</em><br>Her kan man se et lite innblikk i interiørene som ble produsert for prosjektet. Disse ble senere konvertert fra Blender til Codewalker og videre til selve GTA 5 spillet.</p></div>
-                <div class="column"><p><em>Bruksområder</em><br>Hvert enkelt interiør som ble produsert var alltid relatert til senere oppdrag i spillet. Eksemplene nedenfor er blant annet en bank med et hvelv i første etasje for lett tilgang for mindre oppdrag, et mye større hvelv i nederste etasjen for en økt vanskelighetsgrad, og et midtparti med et vedlikeholds område som ga mulighet for å komme seg inn i det største hvelvet gjennom taket.<br><br>I tillegg kan man se en smykkebutikk som har glassmonter for raske “knus og løp” oppdrag, diverse opphengte bilder som kunne skjæres ut, et bakrom for alarmsystemer og et lite innburet område med en veldig dyr diamant.<br><br>Og til slutt et eksempel på en konteiner som har muligheten til å laste inn forskjellige interiør for hvert enkelt oppdrag. I disse to bildene er det et serversystem og en rekke med dokumenter for f.eks politiet.</p></div>
+                <div class="column"><p><em>Bruksområder</em><br>Hvert enkelt interiør som ble produsert var alltid relatert til senere oppdrag i spillet. Eksemplene nedenfor er blant annet en bank med et hvelv i første etasje for lett tilgang for mindre oppdrag, et mye større hvelv i nederste etasjen for en økt vanskelighetsgrad, og et midtparti med et vedlikeholds område som ga mulighet for å komme seg inn i det største hvelvet gjennom taket.<br><br>I tillegg kan man se en smykkebutikk som har glassmonter for raske "knus og løp" oppdrag, diverse opphengte bilder som kunne skjæres ut, et bakrom for alarmsystemer og et lite innburet område med en veldig dyr diamant.<br><br>Og til slutt et eksempel på en konteiner som har muligheten til å laste inn forskjellige interiør for hvert enkelt oppdrag. I disse to bildene er det et serversystem og en rekke med dokumenter for f.eks politiet.</p></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_bank_mid.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_bank_lowr.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_bank_mid.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_bank_lowr.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_bank_top.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_vangelico.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_bank_top.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_vangelico.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <section class="flex-container-content">
                 <div class="column"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_cont_evi.png');" onclick="toggleImageSize(this)"></div>
-                <div class="column column-link" style="background-image: url('gtareborn/reborn_cont_serv.png');" onclick="toggleImageSize(this)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_cont_evi.png');" onclick="showImage(this.style.backgroundImage)"></div>
+                <div class="column column-link" style="background-image: url('gtareborn/reborn_cont_serv.png');" onclick="showImage(this.style.backgroundImage)"></div>
                 <div class="column"></div>
             </section>
             <!--
@@ -214,12 +320,136 @@
         </main>
 
         <footer class="footer">
-            <div class="column"><p>© 2024 Ole K. Hexeberg</p></div>
+            <div class="column"><p>© 2025 Ole K. Hexeberg</p></div>
         </footer>
 
+        <!-- Image Viewer Overlay -->
+        <div class="image-overlay" id="imageOverlay">
+            <div class="close-button" onclick="hideImage()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="nav-button prev-button" onclick="showPrevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <img class="enlarged-image" id="enlargedImage" src="" alt="Enlarged Image">
+            <div class="nav-button next-button" onclick="showNextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
         <script>
-            function toggleImageSize(element) {
-                element.classList.toggle('enlarged');
+            // Array of all images for navigation
+            const galleryImages = [
+                'gtareborn/reborn_trello_1.png',
+                'gtareborn/reborn_trello_2.png',
+                'gtareborn/reborn_gen_checklist.png',
+                'gtareborn/reborn_int_checklist.png',
+                'gtareborn/reborn_notif_code.png',
+                'gtareborn/reborn_logo.png',
+                'gtareborn/reborn_gen_ui.png',
+                'gtareborn/reborn_charselect.png',
+                'gtareborn/reborn_spawnselect.png',
+                'gtareborn/reborn_clothingstore.png',
+                'gtareborn/reborn_heist.png',
+                'gtareborn/reborn_tool.png',
+                'gtareborn/reborn_racing.png',
+                'gtareborn/reborn_vehicleshop.png',
+                'gtareborn/reborn_cameljoe.jpg',
+                'gtareborn/reborn_camelcash.png',
+                'gtareborn/reborn_money_example.png',
+                'gtareborn/reborn_money_anim.png',
+                'gtareborn/reborn_sound_1.png',
+                'gtareborn/reborn_sound_2.png',
+                'gtareborn/reborn_career.png',
+                'gtareborn/reborn_police_notif.png',
+                'gtareborn/reborn_bank_mid.png',
+                'gtareborn/reborn_bank_lowr.png',
+                'gtareborn/reborn_bank_top.png',
+                'gtareborn/reborn_vangelico.png',
+                'gtareborn/reborn_cont_evi.png',
+                'gtareborn/reborn_cont_serv.png',
+                'reborn_heist.jpg'
+            ];
+            
+            let currentImageIndex = 0;
+            
+            // Improved image viewer functionality
+            function showImage(imageSrc) {
+                const overlay = document.getElementById('imageOverlay');
+                const image = document.getElementById('enlargedImage');
+                
+                // Extract the actual image path from the background-image style if needed
+                if (typeof imageSrc === 'string' && imageSrc.includes('url(')) {
+                    // Extract the URL from the background-image style
+                    const match = imageSrc.match(/url\(['"]?([^'"]+)['"]?\)/);
+                    if (match && match[1]) {
+                        imageSrc = match[1];
+                    }
+                }
+                
+                // Set the current image index
+                currentImageIndex = galleryImages.indexOf(imageSrc);
+                if (currentImageIndex === -1) currentImageIndex = 0; // Fallback if not found
+                
+                // Set the image source
+                image.src = imageSrc;
+                
+                // Show the overlay
+                overlay.classList.add('active');
+                
+                // Prevent scrolling on the body
+                document.body.style.overflow = 'hidden';
+                
+                // Add escape key listener
+                document.addEventListener('keydown', handleKeyPress);
+                
+                // Add click outside to close
+                overlay.addEventListener('click', handleOverlayClick);
+            }
+            
+            function hideImage() {
+                const overlay = document.getElementById('imageOverlay');
+                
+                // Hide the overlay
+                overlay.classList.remove('active');
+                
+                // Re-enable scrolling
+                document.body.style.overflow = '';
+                
+                // Remove event listeners
+                document.removeEventListener('keydown', handleKeyPress);
+                overlay.removeEventListener('click', handleOverlayClick);
+            }
+            
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                document.getElementById('enlargedImage').src = galleryImages[currentImageIndex];
+            }
+            
+            function handleKeyPress(event) {
+                switch(event.key) {
+                    case 'Escape':
+                        hideImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                }
+            }
+            
+            function handleOverlayClick(event) {
+                // Close only if clicking on the overlay background, not the image or navigation buttons
+                if (event.target === document.getElementById('imageOverlay')) {
+                    hideImage();
+                }
             }
 
             function scrollToSection(sectionId) {
@@ -229,13 +459,12 @@
                 // Construct the URL with the section ID appended as a hash
                 const targetUrl = indexPageUrl + '#' + sectionId;
 
-                // Navigate to the constructed URL
+                // Navigate to the URL
                 window.location.href = targetUrl;
             }
 
             let mybutton = document.getElementById("myBtn");
 
-            // When the user scrolls down 20px from the top of the document, show the button
             window.onscroll = function() {scrollFunction()};
 
             function scrollFunction() {
@@ -246,7 +475,6 @@
               }
             }
 
-            // When the user clicks on the button, scroll to the top of the document
             function topFunction() {
               document.body.scrollTop = 0;
               document.documentElement.scrollTop = 0;
